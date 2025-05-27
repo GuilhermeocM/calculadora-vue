@@ -1,5 +1,8 @@
 <script setup>
 import { reactive } from 'vue';
+import Cabecalho from './components/Cabecalho.vue';
+import Formulario from './components/Formulario.vue';
+import Resultado from './components/Resultado.vue';
 
 
 const estado = reactive({
@@ -28,31 +31,15 @@ const imprimeResultado = () => {
 
 <template>
   <div class="container">
-    <header class="p-5 pb-2 mb-4 mt-4 bg-light rounded-3">
-      <h1>Calculdora</h1>
-      <p class="text-end">escolha abaixo a operação que deseja realizar <i class="bi bi-arrow-down"></i></p>
-    </header>
-    <form>
-    <div class="row">
-      <div class="col">
-        <input type="number" placeholder="Digite o primeiro número" class="form-control" @keyup="evento => { estado.primeiroNumero = Number(evento.target.value); imprimeResultado()}">
-      </div>
-      <div class="col">
-        <input type="number" placeholder="Digite o segundo número" class="form-control" @keyup="evento => { estado.segundoNumero = Number(evento.target.value); imprimeResultado()}">
-      </div>
-      <div class="col">
-        <select @change="evento => { estado.filtro = evento.target.value; imprimeResultado() }" class="form-control">
-          <option value="adicao">Adição</option>
-          <option value="subtracao">Subtração</option>
-          <option value="multiplicacao">Multiplicação</option>
-          <option value="divisao">Divisão</option>
-        </select>
-      </div>
-    </div>
-  </form>
-  <p class="resultado">
-    {{ estado.resultado }}
-  </p>
+    <Cabecalho />
+    <Formulario
+      :edita-primeiro-numero="evento => { estado.primeiroNumero = Number(evento.target.value); imprimeResultado() }"
+      :edita-segundo-numero="evento => { estado.segundoNumero = Number(evento.target.value); imprimeResultado() }"
+      :edita-filtro="evento => { estado.filtro = evento.target.value; imprimeResultado() }"
+    />
+    <Resultado
+      :resultado="estado.resultado"
+    />
   </div>
   
 </template>
